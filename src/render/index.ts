@@ -150,6 +150,13 @@ function output(e: Node, x = 0, y = 0) {
   }
 }
 
+
+/**
+ * 默认 Text 为 inline 布局，自动换行
+ * 父元素的宽度决定子元素的宽度，子元素的高度决定父元素的高度
+ * 首次布局计算所有元素的宽度高度
+ * 第二次布局，根据元素宽度调整 Text 的宽度和高度，重新计算布局
+ */
 export function render(e: Node) {
   e.ownerDocument?.console.clear();
   const renderTree = layout(e);
