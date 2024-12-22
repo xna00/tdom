@@ -167,7 +167,7 @@ export function render(e: Node) {
   while (stack.length) {
     const node = stack.shift()!;
     const layout = node.yNode?.getComputedLayout();
-    logger.log(node.nodeName, node.textContent, layout);
+    logger.log(node.nodeName, node.textContent, layout, isText(node) && node.textLayout);
     // logger.log(node.nodeName, node.textContent);
     stack.unshift(...node.childNodes);
   }

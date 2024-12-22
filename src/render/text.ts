@@ -1,4 +1,5 @@
 import stringWidth from "string-width";
+import logger from "../utils/logger.js";
 
 export function layoutText(text: string, width: number) {
   const chars = [...text];
@@ -11,11 +12,8 @@ export function layoutText(text: string, width: number) {
       continue;
     }
     const sw = stringWidth(out + chars[i]);
-    if (sw === width) {
-      out += chars[i];
-      ret.push(out);
-      out = "";
-    } else if (sw > width) {
+    // logger.log(out, chars[i], sw, ret);
+    if (sw > width) {
       ret.push(out);
       out = "";
       i--;
