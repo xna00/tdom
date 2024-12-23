@@ -32,6 +32,9 @@ const reconciler = createReconciler<
   createInstance(type, props, root) {
     assert(root.ownerDocument);
     const e = root.ownerDocument.createElement(type);
+    if (props.id) {
+      e.id = props.id;
+    }
     if (props.style) e.style = props.style;
     if (props.onMouseDown) {
       e.addEventListener("mousedown", props.onMouseDown);

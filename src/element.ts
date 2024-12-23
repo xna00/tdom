@@ -25,6 +25,7 @@ export class Node extends EventTarget {
   nextSibling: Node | null = null;
   yNode: YogaNode | null = null;
   ownerDocument: Document | null = null;
+  id = "";
 
   constructor(
     public readonly nodeType: NodeType,
@@ -38,6 +39,7 @@ export class Node extends EventTarget {
     const ret: Node[] = [];
     let node = this.firstChild;
     while (node) {
+      // logger.log(ret.length, node.nodeName, node.id, node.textContent);
       ret.push(node);
       node = node.nextSibling;
     }
@@ -58,6 +60,10 @@ export class Node extends EventTarget {
   }
 
   appendChild(aChild: Node) {
+    // logger.log("appendChild", this.id, aChild.id);
+    if (aChild.parentNode === this) {
+      this.removeChild(aChild);
+    }
     aChild.parentNode = this;
     aChild.previousSibling = this.lastChild;
     if (this.lastChild) {
@@ -70,6 +76,7 @@ export class Node extends EventTarget {
   }
 
   removeChild(child: Node) {
+    // logger.log("removeChild", this.id, child.id);
     if (child.parentNode !== this) {
       throw new Error();
     }
@@ -83,12 +90,17 @@ export class Node extends EventTarget {
     } else {
       child.parentNode.lastChild = child.previousSibling;
     }
+    child.parentNode = child.previousSibling = child.nextSibling = null;
   }
 
   insertBefore(newNode: Node, referenceNode: Node | null) {
+    // logger.log("insertBefore", this.id, newNode.id, referenceNode?.id);
     if (!referenceNode) {
       this.appendChild(newNode);
     } else {
+      if (newNode.parentNode === this) {
+        this.removeChild(newNode);
+      }
       newNode.parentNode = this;
       newNode.nextSibling = referenceNode;
       newNode.previousSibling = referenceNode.previousSibling;

@@ -8,6 +8,7 @@ declare global {
         children?: ReactNode;
         onMouseDown?: (e: MouseEvent) => void;
         key?: Key;
+        id?: string
       };
     }
   }
