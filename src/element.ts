@@ -61,9 +61,7 @@ export class Node extends EventTarget {
 
   appendChild(aChild: Node) {
     // logger.log("appendChild", this.id, aChild.id);
-    if (aChild.parentNode === this) {
-      this.removeChild(aChild);
-    }
+    aChild.parentNode?.removeChild(aChild);
     aChild.parentNode = this;
     aChild.previousSibling = this.lastChild;
     if (this.lastChild) {
@@ -98,9 +96,7 @@ export class Node extends EventTarget {
     if (!referenceNode) {
       this.appendChild(newNode);
     } else {
-      if (newNode.parentNode === this) {
-        this.removeChild(newNode);
-      }
+      newNode.parentNode?.removeChild(newNode);
       newNode.parentNode = this;
       newNode.nextSibling = referenceNode;
       newNode.previousSibling = referenceNode.previousSibling;
